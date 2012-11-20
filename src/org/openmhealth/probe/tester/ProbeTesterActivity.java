@@ -3,8 +3,6 @@ package org.openmhealth.probe.tester;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
@@ -16,8 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ohmage.probemanager.ProbeBuilder;
 import org.ohmage.probemanager.ProbeWriter;
-
-import java.lang.ref.WeakReference;
 
 public class ProbeTesterActivity extends Activity {
     protected static final String TAG = "ProbeManager";
@@ -33,30 +29,70 @@ public class ProbeTesterActivity extends Activity {
     private EditText frequency;
     private EditText size;
 
-    private static boolean running;
+    private ProbeThread[] tasks;
 
-    private static ProbeHandler mHandler = new ProbeHandler();
-    
-    public static class ProbeHandler extends Handler {
-        
-        private static WeakReference<ProbeWriter> mProbeWriter;
+    public static class ProbeThread extends Thread {
 
-        public void setProbeWriter(ProbeWriter probeWriter) {
-            mProbeWriter = new WeakReference<ProbeWriter>(probeWriter);
+        private final ProbeWriter mProbeWriter;
+        private final long mFrequency;
+        private String mData;
+        private boolean stop;
+
+        public ProbeThread(ProbeWriter probeWriter, int size, long frequency) {
+            mProbeWriter = probeWriter;
+            mFrequency = frequency;
+
+            try {
+                JSONObject d = new JSONObject();
+                d.put("data", new String(new char[size]));
+                mData = d.toString();
+            } catch (JSONException e) {
+
+            }
         }
-        
+
         @Override
-        public void handleMessage(Message msg) {
-            long start = System.currentTimeMillis();
-            Log.d(TAG, System.currentTimeMillis() + " message happened: " + msg.arg1);
-            ProbeWriter probeWriter = mProbeWriter.get();
-            if(probeWriter != null)
-                writeSimple(probeWriter, msg.arg2);
-            else
-                throw new RuntimeException("ProbeWriter was lost");
-            Message m2 = new Message();
-            m2.copyFrom(msg);
-            mHandler.sendMessageDelayed(m2, m2.arg1 - (System.currentTimeMillis() - start));
+        public void run() {
+            try {
+                while (!stop) {
+                    long start = System.currentTimeMillis();
+                    writeProbe();
+                    long wait = mFrequency - (System.currentTimeMillis() - start);
+                    if (wait < 0) {
+                        Log.d(TAG, "Could not send fast enough by: " + (-wait) + "ms");
+                        wait = 0;
+                    }
+                    sleep(wait);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Write {@link count} bytes to ohmage
+         * 
+         * @param text
+         */
+        public void writeProbe() {
+            try {
+                ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+                probe.setStream(STREAM_SIZE, STREAM_SIZE_VERISON);
+                probe.setData(mData);
+                // Log.d(TAG, "data: " + data.toString());
+                long start = System.currentTimeMillis();
+                probe.write(mProbeWriter);
+                long end = System.currentTimeMillis();
+                Log.d(TAG, "finished probe " + System.currentTimeMillis());
+                Log.d(TAG, "Duration: " + (end - start));
+            } catch (RemoteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        public void finish() {
+            stop = true;
         }
     }
 
@@ -76,14 +112,15 @@ public class ProbeTesterActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                running = !running;
-                if (running) {
+                if (tasks == null) {
                     send.setText("Stop");
-                    mHandler.setProbeWriter(probeWriter);
                     start();
                 } else {
                     send.setText("Start");
-                    mHandler.removeMessages(0);
+                    for (ProbeThread t : tasks) {
+                        t.finish();
+                    }
+                    tasks = null;
                 }
 
             }
@@ -98,53 +135,17 @@ public class ProbeTesterActivity extends Activity {
 
     private void start() {
         try {
-            Message msg = new Message();
-            msg.arg1 = Integer.valueOf(frequency.getText().toString());
-            msg.arg2 = Integer.valueOf(size.getText().toString());
-            mHandler.sendMessageDelayed(msg, msg.arg1);
+            tasks = new ProbeThread[4];
+            int byteSize = Integer.valueOf(size.getText().toString());
+            int freq = Integer.valueOf(frequency.getText().toString());
+            for (int i = 0; i < 4; i++)
+                tasks[i] = new ProbeThread(probeWriter, byteSize, freq);
+            for (ProbeThread t : tasks)
+                t.start();
         } catch (NumberFormatException e) {
-            running = false;
+            tasks = null;
             Toast.makeText(this, "enter valid numbers", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public static int s;
-    public static String data;
-    
-    /**
-     * Write {@link count} bytes to ohmage
-     * 
-     * @param text
-     */
-    public static void writeSimple(ProbeWriter probeWriter, int count) {
-
-        try {
-            if(data == null || s != count) {
-                s = count;
-
-                JSONObject d = new JSONObject();
-                d.put("data", new String(new char[count]));
-
-                data = d.toString();
-            }
-
-            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
-            probe.setStream(STREAM_SIZE, STREAM_SIZE_VERISON);
-            probe.setData(data.toString());
-            //Log.d(TAG, "data: " + data.toString());
-            long start = System.currentTimeMillis();
-            probe.write(probeWriter);
-            long end = System.currentTimeMillis();
-            Log.d(TAG, "finished probe " + System.currentTimeMillis());
-            Log.d(TAG, "Duration: " + (end - start));
-            
-
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 }

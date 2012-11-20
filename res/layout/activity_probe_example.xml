@@ -44,13 +44,34 @@
         android:text="@string/frequency"
         android:textSize="18sp" />
 
+    <EditText
+        android:id="@+id/thread_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/frequency"
+        android:layout_margin="@dimen/padding_medium"
+        android:ems="10"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/thread_count"
+        android:layout_alignBottom="@+id/thread_count"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="@dimen/padding_medium"
+        android:text="@string/thread_count"
+        android:textSize="18sp" />
+
     <Button
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/frequency"
+        android:layout_below="@+id/thread_count"
         android:layout_margin="@dimen/padding_medium"
         android:text="@string/start" />
 

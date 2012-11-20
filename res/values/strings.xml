@@ -4,7 +4,8 @@
     <string name="app_title">ProbeTester</string>
     <string name="frequency">Frequency:</string>
     <string name="size">Size:</string>
+    <string name="thread_count">Threads:</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
-    
+
 </resources>

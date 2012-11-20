@@ -28,6 +28,7 @@ public class ProbeTesterActivity extends Activity {
 
     private EditText frequency;
     private EditText size;
+    private EditText threadCount;
 
     private ProbeThread[] tasks;
 
@@ -36,24 +37,27 @@ public class ProbeTesterActivity extends Activity {
         private final ProbeWriter mProbeWriter;
         private final long mFrequency;
         private String mData;
+        private final int mSize;
         private boolean stop;
 
         public ProbeThread(ProbeWriter probeWriter, int size, long frequency) {
             mProbeWriter = probeWriter;
             mFrequency = frequency;
-
-            try {
-                JSONObject d = new JSONObject();
-                d.put("data", new String(new char[size]));
-                mData = d.toString();
-            } catch (JSONException e) {
-
-            }
+            mSize = size;
         }
 
         @Override
         public void run() {
             try {
+
+                try {
+                    JSONObject d = new JSONObject();
+                    d.put("data", new String(new char[mSize]));
+                    mData = d.toString();
+                } catch (JSONException e) {
+
+                }
+
                 while (!stop) {
                     long start = System.currentTimeMillis();
                     writeProbe();
@@ -79,12 +83,13 @@ public class ProbeTesterActivity extends Activity {
                 ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
                 probe.setStream(STREAM_SIZE, STREAM_SIZE_VERISON);
                 probe.setData(mData);
+                probe.withId();
                 // Log.d(TAG, "data: " + data.toString());
                 long start = System.currentTimeMillis();
                 probe.write(mProbeWriter);
                 long end = System.currentTimeMillis();
                 Log.d(TAG, "finished probe " + System.currentTimeMillis());
-                Log.d(TAG, "Duration: " + (end - start));
+                Log.d(TAG, "Duration (" + mSize +  "): " + (end - start));
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -106,6 +111,7 @@ public class ProbeTesterActivity extends Activity {
 
         frequency = (EditText) findViewById(R.id.frequency);
         size = (EditText) findViewById(R.id.size);
+        threadCount = (EditText) findViewById(R.id.thread_count);
 
         final Button send = (Button) findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
@@ -135,10 +141,11 @@ public class ProbeTesterActivity extends Activity {
 
     private void start() {
         try {
-            tasks = new ProbeThread[4];
+            int tc = Integer.valueOf(threadCount.getText().toString());
+            tasks = new ProbeThread[tc];
             int byteSize = Integer.valueOf(size.getText().toString());
             int freq = Integer.valueOf(frequency.getText().toString());
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < tc; i++)
                 tasks[i] = new ProbeThread(probeWriter, byteSize, freq);
             for (ProbeThread t : tasks)
                 t.start();

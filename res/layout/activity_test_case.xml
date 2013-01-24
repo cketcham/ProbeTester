@@ -1,0 +1,131 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/padding_medium"
+            android:text="Tests marked with a * should not be sent" />
+
+        <Button
+            android:id="@+id/malformedMetadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/info"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="malformedMetadata"
+            android:text="@string/malformedMetadata" />
+
+        <Button
+            android:id="@+id/invalidMetadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/malformedMetadata"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="invalidMetadata"
+            android:text="@string/invalidMetadata" />
+
+        <Button
+            android:id="@+id/extraMetadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/invalidMetadata"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="extraMetadata"
+            android:text="@string/extraMetadata" />
+
+        <Button
+            android:id="@+id/noMetadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/extraMetadata"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="noMetadata"
+            android:text="@string/noMetadata" />
+
+        <Button
+            android:id="@+id/missingMetadata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/noMetadata"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="missingMetadata"
+            android:text="@string/missingMetadata" />
+
+        
+                <Button
+            android:id="@+id/malformedData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/missingMetadata"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="malformedData"
+            android:text="@string/malformedData" />
+        
+        
+        <Button
+            android:id="@+id/invalidData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/malformedData"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="invalidData"
+            android:text="@string/invalidData" />
+
+        <Button
+            android:id="@+id/noData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/invalidData"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="noData"
+            android:text="@string/noData" />
+
+        <Button
+            android:id="@+id/missingData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/noData"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="missingData"
+            android:text="@string/missingData" />
+
+        <Button
+            android:id="@+id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/missingData"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="empty"
+            android:text="@string/empty" />
+    </RelativeLayout>
+
+</ScrollView>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<observer>
+    <id>org.openmhealth.probe.tester</id>
+    <version>1</version>
+    
+    <name>TesterProbe</name>
+    <description>An example probe to test cases that could be sent to the server.</description>
+    <versionString>1.0</versionString>
+    
+    <stream>
+        <id>size</id>
+        <version>0</version>
+        
+        <name>Size</name>
+        <description>Allows sending a string to ohmage of different sizes.</description>
+
+        <schema>
+            {
+                "type":"object",
+                "doc":"Records text of varying lengths.",
+                "schema":[
+                    {
+                        "name":"data",
+                        "doc":"Text of a random length.",
+                        "type":"string"
+                    }
+                ]
+            }
+        </schema>
+    </stream>
+    
+    <stream>
+        <id>metadata</id>
+        <version>0</version>
+        
+        <name>Metadata</name>
+        <description>A stream which requires a timestamp and id</description>
+        
+        <metadata>
+            <id />
+            <timestamp />
+        </metadata>
+        
+        <schema>
+            {
+                "type":"object",
+                "doc":"Documents the number of kittens seen.",
+                "schema":[
+                    {
+                        "name":"count",
+                        "doc":"The number of kittens seen.",
+                        "type":"number"
+                    }
+                ]
+            }
+        </schema>
+    </stream>
+</observer>

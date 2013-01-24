@@ -7,5 +7,16 @@
     <string name="thread_count">Threads:</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    
+    <string name="malformedMetadata">Malformed Metadata*</string>
+    <string name="invalidMetadata">Invalid Metadata</string>
+    <string name="extraMetadata">Extra Metadata</string>
+    <string name="noMetadata">No Metadata</string>
+    <string name="missingMetadata">Missing Metadata</string>
+    <string name="malformedData">Malformed data*</string>
+    <string name="invalidData">Invalid Data</string>
+    <string name="noData">No Data*</string>
+    <string name="missingData">Missing Data</string>
+    <string name="empty">Empty*</string>
 
 </resources>

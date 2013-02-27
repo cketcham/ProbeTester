@@ -52,7 +52,11 @@ public class ProbeTesterActivity extends Activity {
 
                 try {
                     JSONObject d = new JSONObject();
-                    d.put("data", new String(new char[mSize]));
+                    StringBuilder builder = new StringBuilder(mSize);
+                    for(int i=0;i<mSize;i++) {
+                        builder.append(0);
+                    }
+                    d.put("data", builder.toString());
                     mData = d.toString();
                 } catch (JSONException e) {
 

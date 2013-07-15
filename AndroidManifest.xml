@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.openmhealth.probe.tester"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -21,6 +21,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="org.ohmage.probes.ACTION_CONFIGURE" />
+
+                <data android:mimeType="probe/org.openmhealth.probe.tester" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ProbeTestCaseActivity"
@@ -30,7 +37,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="org.ohmage.probes.ACTION_VIEW_ANALYTICS" />
+
+                <data android:mimeType="probe/org.openmhealth.probe.tester" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="org.ohmage.probemanager"
+            android:resource="@xml/probe" />
     </application>
 
 </manifest>

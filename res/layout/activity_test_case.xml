@@ -13,7 +13,62 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/padding_medium"
-            android:text="Tests marked with a * should not be sent" />
+            android:text="Tests marked with a * should show an error notification when uploaded to the server\nTests with ** should not be sent to ohmage\nTests with *** are not actually errors." />
+
+        <Button
+            android:id="@+id/validProbe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/info"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="validProbe"
+            android:text="@string/validProbe" />
+
+        <Button
+            android:id="@+id/unknownProbe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/validProbe"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="unknownProbe"
+            android:text="@string/unknownProbe" />
+
+        <Button
+            android:id="@+id/unknownProbeVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/unknownProbe"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="unknownProbeVersion"
+            android:text="@string/unknownProbeVersion" />
+
+        <Button
+            android:id="@+id/unknownStream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/unknownProbeVersion"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="unknownStream"
+            android:text="@string/unknownStream" />
+
+        <Button
+            android:id="@+id/unknownStreamVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/unknownStream"
+            android:layout_margin="@dimen/padding_medium"
+            android:onClick="unknownStreamVersion"
+            android:text="@string/unknownStreamVersion" />
 
         <Button
             android:id="@+id/malformedMetadata"
@@ -21,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/info"
+            android:layout_below="@+id/unknownStreamVersion"
             android:layout_margin="@dimen/padding_medium"
             android:onClick="malformedMetadata"
             android:text="@string/malformedMetadata" />
@@ -70,8 +125,7 @@
             android:onClick="missingMetadata"
             android:text="@string/missingMetadata" />
 
-        
-                <Button
+        <Button
             android:id="@+id/malformedData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -81,8 +135,7 @@
             android:layout_margin="@dimen/padding_medium"
             android:onClick="malformedData"
             android:text="@string/malformedData" />
-        
-        
+
         <Button
             android:id="@+id/invalidData"
             android:layout_width="wrap_content"

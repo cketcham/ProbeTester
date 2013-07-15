@@ -33,6 +33,101 @@ public class ProbeTestCaseActivity extends Activity {
     }
 
     /**
+     * This tests sending a valid probe
+     * 
+     * @param v
+     */
+    public void validProbe(View v) {
+        try {
+            JSONObject d = new JSONObject();
+            d.put("count", 0);
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_METADATA, STREAM_METADATA_VERISON);
+            probe.setData(d.toString());
+
+            sendProbe(probe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This tests sending a valid probe
+     * 
+     * @param v
+     */
+    public void unknownProbe(View v) {
+        try {
+            JSONObject d = new JSONObject();
+            d.put("count", 0);
+            ProbeBuilder probe = new ProbeBuilder("org.unknown.probe", 0);
+            probe.setStream(STREAM_METADATA, STREAM_METADATA_VERISON);
+            probe.setData(d.toString());
+
+            sendProbe(probe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This tests sending a valid probe
+     * 
+     * @param v
+     */
+    public void unknownProbeVersion(View v) {
+        try {
+            JSONObject d = new JSONObject();
+            d.put("count", 0);
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, -1);
+            probe.setStream(STREAM_METADATA, STREAM_METADATA_VERISON);
+            probe.setData(d.toString());
+
+            sendProbe(probe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This tests sending a valid probe
+     * 
+     * @param v
+     */
+    public void unknownStream(View v) {
+        try {
+            JSONObject d = new JSONObject();
+            d.put("count", 0);
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream("org.unknown.stream", STREAM_METADATA_VERISON);
+            probe.setData(d.toString());
+
+            sendProbe(probe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This tests sending a valid probe
+     * 
+     * @param v
+     */
+    public void unknownStreamVersion(View v) {
+        try {
+            JSONObject d = new JSONObject();
+            d.put("count", 0);
+            ProbeBuilder probe = new ProbeBuilder(OBSERVER_ID, OBSERVER_VERSION);
+            probe.setStream(STREAM_METADATA, -1);
+            probe.setData(d.toString());
+
+            sendProbe(probe);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * This tests sending a probe with malformed metadata. This should throw an
      * exception when sent
      * 

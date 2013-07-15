@@ -8,15 +8,20 @@
     <string name="start">Start</string>
     <string name="stop">Stop</string>
     
-    <string name="malformedMetadata">Malformed Metadata*</string>
+    <string name="validProbe">Valid Probe</string>
+    <string name="unknownProbe">Unknown Probe*</string>
+    <string name="unknownProbeVersion">Unknown Probe Version*</string>
+    <string name="unknownStream">Unknown Stream</string>
+    <string name="unknownStreamVersion">Unknown Stream Version</string>
+    <string name="malformedMetadata">Malformed Metadata**</string>
     <string name="invalidMetadata">Invalid Metadata</string>
-    <string name="extraMetadata">Extra Metadata</string>
+    <string name="extraMetadata">Extra Metadata***</string>
     <string name="noMetadata">No Metadata</string>
     <string name="missingMetadata">Missing Metadata</string>
-    <string name="malformedData">Malformed data*</string>
+    <string name="malformedData">Malformed data**</string>
     <string name="invalidData">Invalid Data</string>
-    <string name="noData">No Data*</string>
+    <string name="noData">No Data**</string>
     <string name="missingData">Missing Data</string>
-    <string name="empty">Empty*</string>
+    <string name="empty">Empty**</string>
 
 </resources>
